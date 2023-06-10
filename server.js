@@ -9,11 +9,19 @@ const mongoose = require("mongoose", {useNewUrlParser: true}, {useUnifiedTopolog
 const ObjectsToCsv = require('objects-to-csv');; //library which allows json to be converted to csv
 const open = require ("open")
 const write = require ("write")
+const session = require("express-session")
+const flash = require("connect-flash")
 //import { google } from 'googleapis';
 
 app.set("view engine", "ejs") //sets the view engine as ejs to allow to use ejs files
 app.use(bodyParser.urlencoded({extended: false})) //option that needs to be passedin order to use body parser
 app.use(express.static("public"));
+app.use(session({
+  secret: "password",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(flash())
 app.listen(3000)
  //app.use(express.static("/public"));
 
@@ -27,6 +35,13 @@ const connection = mongoose.connection;
 connection.once("open", function(){
   console.log("Mongo database connection successfully established.")
 })
+
+const isAuthenticated = (req, res, next) => {
+  if(req,session.authenticated){
+    return next();
+  }
+  res.redirect("/login");
+};
 //app.use(express.static("/public"));
 //put error handling
 
@@ -89,22 +104,49 @@ app.get("/", function (req,res){
   res.render("index.ejs")
 })
 
+//-------------------------------login route-------------------------------------------------------------
+
+app.post("/login", (req, res) => {
+  const password = req.body.password;
+  if(password === 'inventory'){
+    req.session.authenticated = true;
+    res.render("Inventory.ejs");
+  } else if(password === 'order'){
+    req.session.authenticated = true;
+    res.redirect("/orderSummary");
+  } else if(password === 'download'){
+    req.session.authenticated = true;
+    res.render("download.ejs");
+  }
+  else{
+    res.send('Invalid password');
+  }
+});
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
 
 //-------------------------------orderSummary and orderSummary/search routes-------------------------------------------------------------
 app.get("/orderSummary", function(req,res){//this get request will contain all the requests that have been made
-  Item.find(function(err,items){//finds all requested items in databse
-    if(err){//logs errors in finding items from the "Item" collection
-      console.log(err)
-    }
-    InventoryItem.find(function(err,inventoryItems){//finds all the items in the inventory
-      if (err){//logs any errors in finding inventory items
+    if(req.session.authenticated){
+      req.session.authenticated = false;
+      Item.find(function(err,items){//finds all requested items in databse
+      if(err){//logs errors in finding items from the "Item" collection
         console.log(err)
       }
-      else{
-        res.render("orderSummary.ejs", { ItemsToRender: items, InventoryItems: inventoryItems })
-      }
-    })//end of inventoryitem.find
-  })//end of Item.find
+      InventoryItem.find(function(err,inventoryItems){//finds all the items in the inventory
+        if (err){//logs any errors in finding inventory items
+          console.log(err)
+        }
+        else{
+          res.render("orderSummary.ejs", { ItemsToRender: items, InventoryItems: inventoryItems });
+        }
+      })//end of inventoryitem.find
+    })//end of Item.find
+    } else {
+      res.redirect("/login");
+    }
 })//end of app.get
 
 app.get("/orderSummary/search", function(req,res){
@@ -133,8 +175,8 @@ app.post("/orderSummary/search", function(req,res){//this post route gets hit up
 //-------------------------------end of orderSummary and orderSummary/search routes-------------------------------------------------------------
 
 
-app.get("/inventory", function(req,res ){
-  res.render("Inventory.ejs")
+app.get("/inventory", isAuthenticated, function(req,res ){
+  res.render("Inventory.ejs");
 })
 //-----------------------------beginning of editInventory------------------------------------------------------------
 app.route("/editInventory")
@@ -265,7 +307,7 @@ app.route('/request')//route handler for the request route entry in the post met
 
 
 //----------------------download  page get and past routes----------------------
-app.get("/download",function(req,res){
+app.get("/download", isAuthenticated, function(req,res){
   res.render("download.ejs")
 })
 
