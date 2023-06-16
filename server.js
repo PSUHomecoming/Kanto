@@ -73,8 +73,7 @@ app.set('view engine', 'ejs');
 
 const InventoryItemSchema = new mongoose.Schema({//this InventoryItemSchema schema is used the schema used to add/edit items in the inventory
   itemCode: String,//itemcode of the item
-  size: String, //the size of the item,might not be applicable to all ItemSchema
-  units: String,// current units of the item
+  quantity: String, //how much there is for a particular item
   location: String, //where the item is located at
   subLocation: String, //the specific place where the item is located within the location
   itemDescription: String,//description of the item
