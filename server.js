@@ -30,7 +30,7 @@ app.set('view engine', 'ejs');
 
 
 const uri = process.env.ATLAS_URI
-mongoose.connect("mongodb+srv://techhomecoming:Homecoming20xx!@kanto.5wjfrfx.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true, useCreateIndex: true})
+mongoose.connect("mongodb+srv://techhomecoming:Homecoming20xx!@kanto.5wjfrfx.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false })
 const connection = mongoose.connection;
 connection.once("open", function(){
   console.log("Mongo database connection successfully established.")
@@ -93,7 +93,8 @@ const ItemSchema = new mongoose.Schema({//this itemschema is the schema which is
   event: String,//event for which the item is needed
   itemCode: String,//itemCode of the item being requested
   itemDescription: String,//item description of the item being requested. This is not needed if the itemCode is given
-  quantity: String //quantity  of the item being requested by the user.     maybe change to a number data type
+  quantity: String, //quantity  of the item being requested by the user.     maybe change to a number data type
+  itemTime: String //syas when they need to have the items by
 })
 
 const Item = mongoose.model("Item", ItemSchema)
@@ -193,9 +194,7 @@ app.route("/editInventory")
     console.log(req.body.itemCode)
     InventoryItem.findOneAndUpdate({itemCode: req.body.itemCode}, {
       itemCode: req.body.itemCode,
-      size: req.body.size, //the size of the item,might not be applicable to all ItemSchema
-      units: req.body.units,// current units of the item
-      unitDescription: req.body.unitDescription, //description of what a single unit of the item is
+      quantity: req.body.quantity, //the size of the item,might not be applicable to all ItemSchema
       location: req.body.location, //where the item is located at
       subLocation: req.body.subLocation, //the specific place where the item is located within the location
       itemDescription: req.body.itemDescription,//
@@ -249,8 +248,7 @@ app.get("/signin", (req,res)=> {
 
       const addedInventoryItem = new InventoryItem({
         itemCode: req.body.itemCode,//itemcode of the item
-        size: req.body.size, //the size of the item,might not be applicable to all ItemSchema
-        units: req.body.units,// current units of the item
+        quantity: req.body.quantity, //the size of the item,might not be applicable to all ItemSchema
         location: req.body.location, //where the item is located at
         subLocation: req.body.subLocation, //the specific place where the item is located within the location
         itemDescription: req.body.itemDescription,//description of the item
@@ -288,8 +286,8 @@ app.route('/request')//route handler for the request route entry in the post met
       event: req.body.event,//event for which the item is needed
       itemCode: req.body.itemCode,//itemCode of the item being requested
       itemDescription: req.body.itemDescription,//item description of the item being requested. This is not needed if the itemCode is given
-      quantity: req.body.quantity //quantity  of the item being requested by the user.     maybe change to a number data type
-
+      quantity: req.body.quantity, //quantity  of the item being requested by the user.     maybe change to a number data type
+      itemTime: req.body.itemTime
     })
 
     requestedItem.save()//Saves the requested item to the mongo database
@@ -347,7 +345,7 @@ app.post("/download/requestedItems",function(req,res){
 
       else{
         let csvItems = []// will contain the string items that need to be put into the csv which the user will download
-        csvItems.push("email" + "," + "name" + "," + "committee" + "," + "event" + "," + "Item Code" + "," + "Description" + "," + "Quantity"  + "\n") //the appended String will be the titles for the cells in the csv
+        csvItems.push("email" + "," + "name" + "," + "committee" + "," + "event" + "," + "Item Code" + "," + "Description" + "," + "Quantity"  + "ItemTime", "\n") //the appended String will be the titles for the cells in the csv
 
           for (i in items){//iterates through all the items in the Items collection
             item = items[i] //gets the current Item in the items array in the for loop
