@@ -193,8 +193,8 @@ app.route("/editInventory")
   .post(function(req,res){
     console.log(req.body.itemCode)
     InventoryItem.findOneAndUpdate({itemCode: req.body.itemCode}, {
-      itemCode: req.body.itemCode,
-      quantity: req.body.quantity, //the size of the item,might not be applicable to all ItemSchema
+      itemCode: req.body.itemCode, //what the item is called
+      quantity: req.body.quantity, //quantity of the item
       location: req.body.location, //where the item is located at
       subLocation: req.body.subLocation, //the specific place where the item is located within the location
       itemDescription: req.body.itemDescription,//
@@ -318,11 +318,11 @@ app.post("/download/inventory",function(req,res){
 
       else{
         let csvItems = []// will contain the string items that need to be put into the csv which the user will download
-        csvItems.push("Item Code" + "," + "Size" + "," + "Units" + "," + "Unit Description" + "," + "Location" + "," + "Sub-location" + "," + "Description" + "," + "Notes" + "\n") //the appended String will be the titles for the cells in the csv
+        csvItems.push("Item Code" + "," + "Quantity" + "," + "Location" + "," + "Sub-location" + "," + "Description" + "," + "Notes" + "\n") //the appended String will be the titles for the cells in the csv
 
           for (i in items){//iterates through all the items in the InventoryItem collection
             item = items[i] //gets the current Item in the items array in the for loop
-            let stringCsvToAppend = item.itemCode + "," +  item.size + "," + item.units + "," +  item.unitDescription + "," + item.location + "," +  item.subLocation + "," + item.itemDescription + "," + item.notes + "\n"//creates a csv item by properly formatting the javascirpt object into a csv string
+            let stringCsvToAppend = item.itemCode + "," +  item.quantity + "," + item.location + "," +  item.subLocation + "," + item.itemDescription + "," + item.notes + "\n"//creates a csv item by properly formatting the javascirpt object into a csv string
             csvItems.push(stringCsvToAppend)//adds the csv string to the array which contains all the csv strings
 
           }

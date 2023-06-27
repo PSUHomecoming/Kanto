@@ -28,10 +28,10 @@
 
     <form class="text-center  card-color " action="/editInventory" method="post"
               <input>
-              <input class = "mb-3" type="textbox" name="itemCode" value = <%=ItemsToRender[i].itemCode%>  >
+              <input class = "mb-3" type="textbox" name="itemCode" value = "<%= ItemsToRender[i].itemCode + (ItemsToRender[i+1] ? ' ' + ItemsToRender[i+1].location : '') %>"  >
               <input class = "mb-3" type="number" name="quantity"  value = <%=ItemsToRender[i].quantity%> >
               <input class="mb-3" type="textbox" name="location" value="<%= ItemsToRender[i].location + (ItemsToRender[i+1] ? ' ' + ItemsToRender[i+1].location : '') %>" >
-              <input  class = "mb-3" type="textbox" name="subLocation" value = <%=ItemsToRender[i].subLocation%> >
+              <input  class = "mb-3" type="textbox" name="subLocation" value ="<%= ItemsToRender[i].subLocation + (ItemsToRender[i+1] ? ' ' + ItemsToRender[i+1].sublocation : '') %>" >
               <input class = "mb-3" type="textbox" name="itemDescription" value = <%=ItemsToRender[i].itemDescription%> >
               <input class = "mb-3" type="textbox" name="notes" value = <%=ItemsToRender[i].notes%>  >
               <div class="text-center mt-5 pb-5 "><!-- left div-->
