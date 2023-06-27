@@ -1,6 +1,6 @@
 //jshint esversion:6
 const express = require("express"); //requires express
-const bodyParser = require("body-parser"); //requires body-parser
+const bodyParser = require("body-parser"); //requires body-parserr
 const layouts = require("express-ejs-layouts") //requires express-ejs-layouts which allows to use layouts in ejs which allow to implement a header or footer which is pre-defined on each page
 const exceljs = require("exceljs")
 const app = express(); //assigns app to an instance of express
