@@ -119,7 +119,7 @@ app.post("/login", (req, res) => {
     res.render("download.ejs");
   } else if(password === 'request'){
     req.session.authenticated = true;
-    res.render("request.ejs");
+    res.redirect("/request");
   }
   else{
     res.send('Invalid password');
