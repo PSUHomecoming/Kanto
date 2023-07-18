@@ -267,7 +267,7 @@ app.get("/signin", (req,res)=> {
 //---------------------request routers -----------------------------------------------
 app.route('/request')//route handler for the request route entry in the post method
 
-  .get(isAuthenticated, function (req, res) {//renders the request page
+  .get(function (req, res) {//renders the request page
     InventoryItem.find(function(err, items){//the items that our found will be used to make a dropdown where users can select which items they want ot request by and it will show both the itemcode and itemname in each option in the dropdown so they don't have to look up itemcodes separately.
       if (err){//logs any errors there were in finding items in the collection
         console.log(err)
