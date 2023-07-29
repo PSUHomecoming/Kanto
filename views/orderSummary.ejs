@@ -1,61 +1,96 @@
 <%- include ("partials/header.ejs")%>
 
+<style>
+    body {
+        background-color: #fff;
+        color: #013c74;
+        font-family: Arial, sans-serif;
+        margin:0;
+        height:100%;
+    }
 
+    .container {
+        max-width: 900px;
+        border-radius: 15px;
+        padding: 20px;
+    }
 
+    h1, h2, h3, h4, h5, h6 {
+        color: #013c74;
+    }
 
+    .card {
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: #013c74;
+        color: #f6f6f6;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    }
 
-<div class = "background-color">
+    .btn-primary {
+        color: #fff;
+        background-color: #013c74;
+        border: none;
+    }
 
-    <h1 class="text-center ">Order Summary</h1>
-    <form class="form-inline d-flex justify-content-center md-form form-sm" method= "post" action= "/orderSummary/search">
-      <select name="searchedItem" class="form-control form-control-sm mr-3 w-75" placeholder "Search Items by item code">
+    .btn-primary:hover, .btn-primary:focus {
+        color: #fff;
+        background-color: #002244;
+        border: none;
+    }
 
-        <% for (i in InventoryItems){%>
-          <% let dropDownItemName = InventoryItems[i].itemCode + ": " + InventoryItems[i].itemDescription %>
-          <% let dropDownItemValue = InventoryItems[i].itemCode %>
-          <option value = <%=dropDownItemValue%>  > <%=dropDownItemName%> </option>
-          <% } %>
-      </select>
-      <button class="btn btn-primary" type = "submit" aria-hidden="true">Search</button>
+    .form-control {
+        border-radius: 0;
+        border: 2px solid #013c74;
+        color: #013c74;
+    }
+
+    .form-control:focus {
+        border: 2px solid #013c74;
+        box-shadow: none;
+    }
+
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        background-color: #f5f5f5;
+    }
+
+</style>
+
+<div class="container">
+    <h1 class="text-center">Order Summary</h1>
+    
+    <form class="form-inline d-flex justify-content-center md-form form-sm mt-3" method="post" action="/orderSummary/search">
+        <select name="searchedItem" class="form-control form-control-lg mr-3 w-75" placeholder="Search Items by item code">
+            <% for (i in InventoryItems){%>
+                <% let dropDownItemName = InventoryItems[i].itemCode + ": " + InventoryItems[i].itemDescription %>
+                <% let dropDownItemValue = InventoryItems[i].itemCode %>
+                <option value=<%=dropDownItemValue%>><%=dropDownItemName%></option>
+            <% } %>
+        </select>
+        <button class="btn btn-primary btn-lg" type="submit" aria-hidden="true">Search</button>
     </form>
 
-
-
-    <div class= "text-center pt-4">
-      <a class = "text-center pt-4" href = "/orderSummary" >See all orders</a>
+    <div class="text-center pt-4">
+        <a href="/orderSummary">See all orders</a>
     </div>
 
-
-
-
-
-
-    <div class=" text-center mt-5" >
-
-            <% for (i in ItemsToRender) {%>
-
-              <div class = "background-color ">
-
-              <div class="card-width card-color card-border pt-3 pb-3 pl-2 mb-3  " >
-              <h3 >Item: <%=ItemsToRender[i].itemDescription%> </h3>
-              <p class="card-text">Item code: <%=ItemsToRender[i].itemCode%> </p>
-              <p class="card-text">Quantity Requested: <%=ItemsToRender[i].quantity%> </p>
-              <p class="card-text">Requested By: <%=ItemsToRender[i].name%></p>
-              <p class="card-text">Committee: <%=ItemsToRender[i].committee%></p>
-              <p class="card-text">Event needed for: <%=ItemsToRender[i].event%></p>
-              <p class="card-text">Items needed by: <%=ItemsToRender[i].itemTime%></p>
-              </div>
-            </div>
-
-             <div class = "background-color pb-3">
-               </div>
-
-              <% } %>
-
-
+    <% for (i in ItemsToRender) {%>
+        <div class="card mt-3">
+            <h2>Item: <%=ItemsToRender[i].itemDescription%></h2>
+            <p>Item code: <%=ItemsToRender[i].itemCode%></p>
+            <p>Quantity Requested: <%=ItemsToRender[i].quantity%></p>
+            <p>Requested By: <%=ItemsToRender[i].name%></p>
+            <p>Committee: <%=ItemsToRender[i].committee%></p>
+            <p>Event needed for: <%=ItemsToRender[i].event%></p>
+            <p>Items needed by: <%=ItemsToRender[i].itemTime%></p>
         </div>
-  </div>
-
-
+    <% } %>
+</div>
 
 <%- include ("partials/footer.ejs")%>

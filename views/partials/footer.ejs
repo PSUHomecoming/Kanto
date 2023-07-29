@@ -1,17 +1,69 @@
-<div class="bg-dark fixed-bottom position-static d-flex">
+
+
+<style>
+.footer-dark {
+  background-color: #003c71; /* Adjust this to change the background color */
+  padding: 20px 50px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: white; /* Adjust this to change the text color */
+  font-weight: bold; /* This will make all text in the footer bold */
+}
+
+.footer-dark p {
+  margin-bottom: 0;
+}
+
+.footer-dark .homecoming {
+  font-size: 3rem;
+  margin-top: 0;
+  color: white; /* Adjust this to change the h1 color */
+  font-style: italic;
+  font-weight: bold;
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .d-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-dark p, .footer-dark h1 {
+    margin-bottom: 15px;
+  }
+}
+</style>
+
+<div class="footer-dark fixed-bottom position-static d-flex">
   <div>
-    <p class="text-white">  227B HUB University Park, PA 16802</p>
-    <p class="text-white">  Email:homecoming@psu.edu</p>
-    <p class="text-white">  Phone: (814) 863-4299</p>
+    <p>227B HUB University Park, PA 16802</p>
+    <p>Email: homecoming@psu.edu</p>
+    <p>Phone: (814) 863-4299</p>
   </div>
   <div class="col-lg-9">
-    <h1 class="text-center text-white">PSU Homecoming</h1>
+    <h1 class="homecoming text-center">Penn State Homecoming</h1>
   </div>
-
-  <div >
-    <p class="text-left text-white">PSU Homecoming</p>
+  <div>
+    <p class="text-left">PSU Homecoming</p>
   </div>
 </div>
 
 </body>
 </html>
+
+
