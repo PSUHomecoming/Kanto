@@ -108,16 +108,16 @@ app.get("/", function (req,res){
 
 app.post("/login", (req, res) => {
   const password = req.body.password;
-  if(password === 'inventory'){
+  if(password === 'nYk@pFkxNeMX8hLJz%4C'){
     req.session.authenticated = true;
     res.render("Inventory.ejs");
-  } else if(password === 'order'){
+  } else if(password === '6@nUwRSe4EZzuSdy#B22'){
     req.session.authenticated = true;
     res.redirect("/orderSummary");
-  } else if(password === 'download'){
+  } else if(password === 'p1evZCUm@8ru6s&$5RJ5'){
     req.session.authenticated = true;
     res.render("download.ejs");
-  } else if(password === 'request'){
+  } else if(password === '&$v7hUqF7EanxS$CfHcz'){
     req.session.authenticated = true;
     res.redirect("/request");
   }
