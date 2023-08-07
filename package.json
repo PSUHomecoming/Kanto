@@ -31,11 +31,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shahzeb2000786/Kanto.git"
+    "url": "git+https://github.com/PSUHomecoming/Kanto.git"
   },
   "bugs": {
-    "url": "https://github.com/shahzeb2000786/Kanto/issues"
+    "url": "https://github.com/PSUHomecoming/Kanto/issues"
   },
-  "homepage": "https://github.com/shahzeb2000786/Kanto#readme",
-  "description": ""
+  "homepage": "https://github.com/PSUHomecoming/Kanto#readme",
+  "description": "Resource Management Application for Penn State Homecoming"
 }
