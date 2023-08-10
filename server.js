@@ -30,7 +30,7 @@ app.set('view engine', 'ejs');
 
 
 const uri = process.env.ATLAS_URI
-mongoose.connect("mongodb+srv://techhomecoming:Homecoming20xx!@kanto.jv4mnxt.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false })
+mongoose.connect("mongodb+srv://techhomecoming:Homecoming20xx!@kanto.jv4mnxt.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false, useUnifiedTopology: true})
 const connection = mongoose.connection;
 connection.once("open", function(){
   console.log("Mongo database connection successfully established.")
